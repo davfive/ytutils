@@ -1,10 +1,10 @@
 #!/usr/bin/env bash -e
 # My TAC Challenge Recordings YT Playlist Combiners
 #
-# I study guitar with Tony's Acoustic Challenge (TAC). Part of the
-# lessons involve a weekdayly challenge, which when I'm comfortable
-# with it, I upload a my recording of the to my YT playlist for that
-# month.
+# I study guitar with Tony's Acoustic Challenge (TAC) which can
+# be found at https://tonypolecastro.com. Part of the lessons 
+# involve a weekdayly challenge, which when I'm comfortable with it,
+# I upload a my recording of the to my YT playlist for that month.
 #
 # This script takes the recordings from that playlist, annotates them
 # with the challenge number and challenge name. I have a consistent
@@ -57,6 +57,8 @@ pldesc="$pltitle.desc.txt"
 cat <<EOCAT > "$pldir/$pldesc"
 A monthly TAC Daily Challenge "Recital" from my recordings in the playlist '$pltitle' at $plurl.
 $plurl
+
+Tony's Acoustic Challenge can be found at https://tonypolecastro.com.
 
 This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
 Challenges:
