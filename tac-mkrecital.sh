@@ -3,16 +3,18 @@
 #
 # I study guitar with Tony's Acoustic Challenge (TAC). Part of the
 # lessons involve a weekdayly challenge, which when I'm comfortable
-# with it, I upload a recording of the challenge to my a playlist
-# on my YT channel that has the recordings for that month.
+# with it, I upload a my recording of the to my YT playlist for that
+# month.
 #
-# This script takes the recordings in that playlist, annotates them
-# with the challenge number (YYYYMMW#D#) and challenge name. These
-# are formatted into the titles I use for my uploads, which look like
-# this: TAC 202108W1D2 - Challenge Name @60.
+# This script takes the recordings from that playlist, annotates them
+# with the challenge number and challenge name. I have a consistent
+# naming convention for my recording titles so I can use them for the
+# annotation information I put in the video. The title format is
+#   TAC <challenge#> - <challenge-name> @<my-bpm>
+#   TAC 202108W1D2 - Challenge Name @60
 #
 # The output of this program will go into a subdirectory named playlist-#
-# that will have the following files:
+# that has the following files:
 #   • <playlist-name>.mp4      # The full concatenated video
 #   • <playlist-name>.desc.txt # The description to use for the video
 #                              # including timestamped chapter index
@@ -42,7 +44,7 @@ pljson=$pldir/playlist.json
 
 # Download Playlist Videos
 echo; echo "## Downloading playlist videos ..."
-#(set -x ; youtube-dl --abort-on-error -f mp4 -o "$pldir/%(title)s.%(ext)s" $plurl)
+(set -x ; youtube-dl --abort-on-error -f mp4 -o "$pldir/%(title)s.%(ext)s" $plurl)
 
 # Video files
 pltitle="$(jq -r '.title' $pljson | xargs)"
