@@ -1,9 +1,26 @@
 #!/usr/bin/env bash -e
-# This script takes a youtube playlist and merges it into one video file
-# It add the filename to the top right (TAC YYYYMMW#D# - <Challenge Name> @BPM)
-# brew install youtube-dl
-# brew install ffmpeg
-# brew install jq
+# My TAC Challenge Recordings YT Playlist Combiners
+#
+# I study guitar with Tony's Acoustic Challenge (TAC). Part of the
+# lessons involve a weekdayly challenge, which when I'm comfortable
+# with it, I upload a recording of the challenge to my a playlist
+# on my YT channel that has the recordings for that month.
+#
+# This script takes the recordings in that playlist, annotates them
+# with the challenge number (YYYYMMW#D#) and challenge name. These
+# are formatted into the titles I use for my uploads, which look like
+# this: TAC 202108W1D2 - Challenge Name @60.
+#
+# The output of this program will go into a subdirectory named playlist-#
+# that will have the following files:
+#   • <playlist-name>.mp4      # The full concatenated video
+#   • <playlist-name>.desc.txt # The description to use for the video
+#                              # including timestamped chapter index
+#   • *.mp4                    # All of the videos in the playlist
+#
+# Prerequisites:
+#   brew install youtube-dl ffmpeg jq
+# Usage:
 USAGE="$0 https://www.youtube.com/playlist?list=..."
 if [ $# -ne 1 ]; then echo "Error: No playlist specified"; echo $USAGE; exit 1; fi
 plurl=$1
@@ -72,5 +89,6 @@ $tacname':$ffmpeg_drawops" -c:a copy "$plnextvid")
 done)
 
 mv "$pldir/$plcurrvid" "$pldir/$plvideo" # store final video
-echo
+echo "Upload This: $pldir/$plvideo"
+echo "Description: $pldir/$pldesc"
 (set -x; cat "$pldir/$pldesc")
