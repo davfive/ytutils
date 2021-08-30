@@ -59,7 +59,7 @@ A monthly TAC Daily Challenge "Recital" of my recordings from the playlist '$plt
 
 Tony's Acoustic Challenge (TAC) can be found at https://tonypolecastro.com.
 
-This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
+This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
 
 Challenges:
 EOCAT
