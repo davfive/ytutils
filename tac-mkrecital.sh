@@ -28,7 +28,7 @@ echo; echo "## Downloading playlist videos ..."
 #(set -x ; youtube-dl --abort-on-error -f mp4 -o "$pldir/%(title)s.%(ext)s" $plurl)
 
 # Video files
-pltitle="$(jq -r '.title' $pljson)"
+pltitle="$(jq -r '.title' $pljson | xargs)"
 plvideo="$pltitle.mp4"          # Final video
 plcurrvid="$pltitle.curr.mp4"   # Current video (with previous concats)
 plnextvid="$pltitle.next.mp4"   # Nextvideo to concatenate with
@@ -36,10 +36,10 @@ plcatfiles="plcatfiles.txt"     # File to concatenate
 
 pldesc="$pltitle.desc.txt"
 cat <<EOCAT > "$pldir/$pldesc"
-A monthly TAC Daily Challenge "Recital" from my recordings
-From Playlist: $pltitle
+A monthly TAC Daily Challenge "Recital" from my recordings in the playlist '$pltitle' at $plurl.
 $plurl
 
+This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
 Challenges:
 EOCAT
 
