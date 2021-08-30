@@ -56,7 +56,6 @@ plcatfiles="plcatfiles.txt"     # File to concatenate
 pldesc="$pltitle.desc.txt"
 cat <<EOCAT > "$pldir/$pldesc"
 A monthly TAC Daily Challenge "Recital" of my recordings from the playlist '$pltitle' at $plurl.
-$plurl
 
 Tony's Acoustic Challenge (TAC) can be found at https://tonypolecastro.com.
 
