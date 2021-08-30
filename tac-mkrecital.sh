@@ -58,7 +58,7 @@ cat <<EOCAT > "$pldir/$pldesc"
 A monthly TAC Daily Challenge "Recital" from my recordings in the playlist '$pltitle' at $plurl.
 $plurl
 
-Tony's Acoustic Challenge can be found at https://tonypolecastro.com.
+Tony's Acoustic Challenge (TAC) can be found at https://tonypolecastro.com.
 
 This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
 Challenges:
