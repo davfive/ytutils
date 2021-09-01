@@ -23,9 +23,10 @@
 # Prerequisites:
 #   brew install youtube-dl ffmpeg jq
 # Usage:
-USAGE="$0 https://www.youtube.com/playlist?list=..."
-if [ $# -ne 1 ]; then echo "Error: No playlist specified"; echo $USAGE; exit 1; fi
-plurl=$1
+USAGE="$0 'Month YYYY' https://www.youtube.com/playlist?list=..."
+if [ $# -ne 2 ]; then echo "Error: No playlist specified"; echo $USAGE; exit 1; fi
+plmonth=$1
+plurl=$2
 
 ffmpeg="ffmpeg -hide_banner -loglevel error"
 ffmpeg_drawops="x=w-tw-10:y=10:fontsize=24:fontcolor=white:line_spacing=10:box=1:boxborderw=10:boxcolor=black@0.4"
@@ -34,7 +35,7 @@ ffduration="ffprobe -v error -show_entries format=duration -of default=noprint_w
 # Setup playlist-# dir
 pldir=playlist; n=1
 while [[ -d "$pldir-$n" ]] ; do n=$(($n+1)) ; done
-pldir=$pldir-5 #$n
+pldir=$pldir-$n
 mkdir -p "$pldir"
 
 # Get Playlist Info
@@ -55,11 +56,7 @@ plcatfiles="plcatfiles.txt"     # File to concatenate
 
 pldesc="$pltitle.desc.txt"
 cat <<EOCAT > "$pldir/$pldesc"
-A monthly TAC Daily Challenge "Recital" of my recordings from the playlist '$pltitle' at $plurl.
-
-Tony's Acoustic Challenge (TAC) can be found at https://tonypolecastro.com.
-
-This video and the chapters markers below were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh.
+My TAC Daily Challenge Compilation for $plmonth
 
 Challenges:
 EOCAT
@@ -92,7 +89,15 @@ $tacname':$ffmpeg_drawops" -c:a copy "$plnextvid")
   plchapstart=$($ffduration "$plcurrvid" | cut -d. -f1 | cut -d: -f2-) # 0:00:00.000000 to 00:00
 done)
 
+cat <<EOCAT > "$pldir/$pldesc"
+Tony's Acoustic Challenge (TAC): https://tonypolecastro.com
+My 'TAC 202108 Dailys' Playlist: $plurl
+
+This video and the chapters markers above were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh
+EOCAT
+
 mv "$pldir/$plcurrvid" "$pldir/$plvideo" # store final video
 echo "Upload This: $pldir/$plvideo"
+echo "Video Title: TAC Daily Challenge Compilation for $plmonth"
 echo "Description: $pldir/$pldesc"
 (set -x; cat "$pldir/$pldesc")
