@@ -89,7 +89,8 @@ $tacname':$ffmpeg_drawops" -c:a copy "$plnextvid")
   plchapstart=$($ffduration "$plcurrvid" | cut -d. -f1 | cut -d: -f2-) # 0:00:00.000000 to 00:00
 done)
 
-cat <<EOCAT > "$pldir/$pldesc"
+cat <<EOCAT >> "$pldir/$pldesc"
+
 Tony's Acoustic Challenge (TAC): https://tonypolecastro.com
 My 'TAC 202108 Dailys' Playlist: $plurl
 
