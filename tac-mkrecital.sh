@@ -94,7 +94,7 @@ cat <<EOCAT >> "$pldir/$pldesc"
 Tony's Acoustic Challenge (TAC): https://tonypolecastro.com
 My 'TAC 202108 Dailys' Playlist: $plurl
 
-This video and the chapters markers above were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh
+This video and the chapter markers above were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh
 EOCAT
 
 mv "$pldir/$plcurrvid" "$pldir/$plvideo" # store final video
