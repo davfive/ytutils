@@ -108,6 +108,6 @@ EOCAT
 
 mv "$pldir/$plcurrvid" "$pldir/$plvideo" # store final video
 echo "Upload This: $pldir/$plvideo"
-echo "Video Title: TAC Daily Challenge Compilation for $plmonth"
+echo "Video Title: My TAC Daily Challenges Compilation for $plmonth"
 echo "Description: $pldir/$pldesc"
 (set -x; cat "$pldir/$pldesc")
