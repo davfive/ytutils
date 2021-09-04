@@ -23,20 +23,26 @@
 # Prerequisites:
 #   brew install youtube-dl ffmpeg jq
 # Usage:
-USAGE="$0 'Month YYYY' https://www.youtube.com/playlist?list=..."
-if [ $# -ne 2 ]; then echo "Error: No playlist specified"; echo $USAGE; exit 1; fi
+USAGE="$0 'Month YYYY' https://www.youtube.com/playlist?list=... [REUSEPL#]"
+if [[ $# -ne 2 && $# -ne 3 ]]; then echo "Error: No playlist specified"; echo $USAGE; exit 1; fi
 plmonth=$1
 plurl=$2
+plreuse=$3
 
 ffmpeg="ffmpeg -hide_banner -loglevel error"
 ffmpeg_drawops="x=w-tw-10:y=10:fontsize=24:fontcolor=white:line_spacing=10:box=1:boxborderw=10:boxcolor=black@0.4"
 ffduration="ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 -sexagesimal"
 
 # Setup playlist-# dir
-pldir=playlist; n=1
-while [[ -d "$pldir-$n" ]] ; do n=$(($n+1)) ; done
-pldir=$pldir-$n
-mkdir -p "$pldir"
+pldir=playlist
+if [[ "x$plreuse" != "x" && -d "$pldir-$plreuse" ]]; then
+  pldir="$pldir-$plreuse"
+else
+  n=1
+  while [ -d "$pldir-$n" ] ; do n=$(($n+1)) ; done
+  pldir=$pldir-$n
+  mkdir -p "$pldir"
+fi
 
 # Get Playlist Info
 echo; echo "## Getting playlist info ..."
@@ -53,8 +59,11 @@ plvideo="$pltitle.mp4"          # Final video
 plcurrvid="$pltitle.curr.mp4"   # Current video (with previous concats)
 plnextvid="$pltitle.next.mp4"   # Nextvideo to concatenate with
 plcatfiles="plcatfiles.txt"     # File to concatenate
-
 pldesc="$pltitle.desc.txt"
+
+#- We could be rerunning playlist dir, so we need these files cleared first
+(set -x ; cd $pldir; rm -f "$plvideo" "$plcurrvid" "$plnextvid" "$plcatfiles" "$pldesc")
+
 cat <<EOCAT > "$pldir/$pldesc"
 My TAC Daily Challenge Compilation for $plmonth
 
@@ -92,7 +101,7 @@ done)
 cat <<EOCAT >> "$pldir/$pldesc"
 
 Tony's Acoustic Challenge (TAC): https://tonypolecastro.com
-My 'TAC 202108 Dailys' Playlist: $plurl
+Compiled from '$pltitle': $plurl
 
 This video and the chapter markers above were generated using youtube-dl and ffmpeg. The script can be found on GitHub at https://github.com/davfive/ytutils/blob/main/tac-mkrecital.sh
 EOCAT
